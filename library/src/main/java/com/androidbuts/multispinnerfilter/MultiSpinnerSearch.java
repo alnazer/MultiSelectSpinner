@@ -52,8 +52,8 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements OnCancelList
         for (int i = 0; i < a.getIndexCount(); ++i) {
             int attr = a.getIndex(i);
             if (attr == R.styleable.MultiSpinnerSearch_hintText) {
-                spinnerTitle = a.getString(attr);
-                defaultText = spinnerTitle;
+                spinnerTitle = this.setHintText(a.getString(attr));
+                defaultText = this.getHintText();
                 break;
             }
         }
@@ -183,9 +183,17 @@ public class MultiSpinnerSearch extends AppCompatSpinner implements OnCancelList
                 spinnerBuffer.append(", ");
             }
         }
-        if (spinnerBuffer.length() > 2)
+  public String getHintText(){
+        return this.spinnerTitle;
+    }
+    public void setHintText(String hibtText){
+        this.spinnerTitle = hibtText;
+    }
+        if (spinnerBuffer.length() > 2){
             defaultText = spinnerBuffer.toString().substring(0, spinnerBuffer.toString().length() - 2);
-
+        }else{
+            defaultText = this.getHintText();
+        }
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(getContext(), R.layout.textview_for_spinner, new String[]{defaultText});
         setAdapter(adapterSpinner);
 
