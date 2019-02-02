@@ -25,7 +25,12 @@ public class MultiSpinner extends AppCompatSpinner implements OnMultiChoiceClick
     public MultiSpinner(Context context) {
         super(context);
     }
-
+    public String getHintText(){
+       return this.spinnerTitle;
+    }
+     public void setHintText(String hibtText){
+       this.spinnerTitle = hibtText;
+    }
     public MultiSpinner(Context arg0, AttributeSet arg1) {
         super(arg0, arg1);
         TypedArray a = arg0.obtainStyledAttributes(arg1, R.styleable.MultiSpinnerSearch);
@@ -33,7 +38,7 @@ public class MultiSpinner extends AppCompatSpinner implements OnMultiChoiceClick
         for (int i = 0; i < N; ++i) {
             int attr = a.getIndex(i);
             if (attr == R.styleable.MultiSpinnerSearch_hintText) {
-                spinnerTitle = a.getString(attr);
+                this.setHintText(a.getString(attr));
             }
         }
         a.recycle();
@@ -63,7 +68,7 @@ public class MultiSpinner extends AppCompatSpinner implements OnMultiChoiceClick
         if (spinnerText.length() > 2) {
             spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
         } else {
-            spinnerText = defaultText;
+            spinnerText = this.getHintText();
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.textview_for_spinner, new String[]{spinnerText});
